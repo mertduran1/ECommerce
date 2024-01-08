@@ -87,4 +87,12 @@ public class UserRepositoryTests {
         repo.deleteById(2);
 
     }
+
+    @Test
+    public void testGetUserByEmail() {
+        String email = "ugur@gmail.com";
+        User user = repo.getUserByEmail(email);
+
+        assertThat(user).isNotNull();
+    }
 }
