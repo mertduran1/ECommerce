@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Home - ETicaret Admin </title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
-    <link rel="stylesheet" type="text/css" th:ref="@{/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/images/fontawesome/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/images/style.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -97,9 +97,8 @@
                         <a th:if="${user.enabled == false}" class="fas fa-check-circle fa-2x icon-dark" href=""> </a>
                     </td>
                     <td>
-                        <a class="fas fa-edit fa-2x icon-green" href=""><a/>
-                        &nbsp;
-                        <a class="fas fa-trash fa-2x icon-dark" href=""><a/>
+                        <a class="fas fa-edit fa-2x icon-green" href="" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+                        <a class="fas fa-trash fa-2x icon-dark" href=""></a>
                     </td>
                 </tr>
             </tbody>
