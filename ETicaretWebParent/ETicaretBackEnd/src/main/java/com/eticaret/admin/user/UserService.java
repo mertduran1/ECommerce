@@ -3,6 +3,7 @@ package com.eticaret.admin.user;
 
 import com.eticaret.common.entity.Role;
 import com.eticaret.common.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -76,6 +78,18 @@ public class UserService {
         } catch (NoSuchElementException exception) {
             throw new UserNotFoundException("Could not find any user with id " + id);
         }
+    }
 
+    public void delete(Integer id) throws UserNotFoundException{
+        Long countById = userRepo.countById(id);
+        if(countById == null ||countById == 0) {
+            throw new UserNotFoundException("Could not find any user with id " + id);
+        }
+
+        userRepo.deleteById(id);
+    }
+
+    public void updateUserEnabledStatus(Integer id, boolean enabled) {
+        userRepo.updateEnabledStatus(id, enabled);
     }
 }

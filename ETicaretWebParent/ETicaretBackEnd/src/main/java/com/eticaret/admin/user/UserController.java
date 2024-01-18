@@ -3,6 +3,7 @@ package com.eticaret.admin.user;
 import com.eticaret.common.entity.Role;
 import com.eticaret.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,29 @@ public class UserController {
         }catch (UserNotFoundException exception) {
             redirectAttributes.addFlashAttribute("message", exception.getMessage());
         }
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            service.delete(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The user ID " + id + " Has been deleted successfully");
+        } catch (UserNotFoundException exception) {
+            redirectAttributes.addFlashAttribute("message", exception.getMessage());
+        }
+
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/{id}/enabled/{status}")
+    public String updateUserEnabledStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean enabled,
+                                          RedirectAttributes redirectAttributes) {
+        service.updateUserEnabledStatus(id, enabled);
+        String status = enabled ? "enabled" : "disabled";
+        String message = "The user id " + id + " has been " + status;
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/users";
     }
 }
